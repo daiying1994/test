@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .cont{width:800px;height:200px;margin:10px auto;position: relative;}
+        .cont a{width:800px;height:200px;position: absolute;left:800px;top:0;}
+        .cont a img{width:800px;height:200px;}
+        .cont a:nth-child(1){left:0;}
+        .btns input{width:40px;height:40px;top:80px;float:left;border:none;background:rgba(200,200,200,0.6);position: absolute;outline: none;cursor: pointer;z-index: 999999;}
+        #left{left:0;}
+        #right{right:0;}
+
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <a><img src="https://img.zcool.cn/community/019ae95cd23bc1a801208f8bd39892.jpg@1380w"/></a>
+		<a><img src="https://img.zcool.cn/community/01db365cd00163a80121416820ee1e.jpg@1380w"/></a>
+        <a><img src="https://img.zcool.cn/community/014aa05ccfafc3a801208f8bd14725.jpg@1380w"/></a>
+        <a><img src="https://img.zcool.cn/community/014aa05ccfafc3a801208f8bd14725.jpg@1380w"/></a>
+		
+        <div class="btns">
+            <input type="button" id="left" value="<<<"/>
+            <input type="button" id="right" value=">>>"/>
+        </div>
+    </div>
+</body>
+<script src = "move.js"></script>
+<script>
+    function Banner(){
+        this.left = document.getElementById("left")
+        this.right = document.getElementById("right")
+        this.img = document.querySelectorAll(".cont a")
+        this.index = 0;
+        this.init();
+        this.last = this.img.length-1;
+    }
+    Banner.prototype.init = function(){
+        var that = this;
+        this.left.onclick = function(){
+            that.changeIndex("left")
+        }
+        this.right.onclick = function(){
+            that.changeIndex("right")
+        }
+    }
+    Banner.prototype.changeIndex = function(type){
+        if(type == "left"){
+            if(this.index = 0){
+                this.index = this.img.length-1;
+                this.last = 0;
+                
+            }else{
+                this.index--;
+                this.last = this.index+1;
+            }
+            this.display(0);
+        }else{
+            if(this.index == this.img.length-1){
+                this.index = 0;
+                this.last = this.img.length-1;
+            }else{
+                this.index++;
+                this.last = this.index-1;
+            }
+            this.display(1);
+        }
+
+    }
+    Banner.prototype.display = function(type){
+        			if(type == 0){
+//				
+//				要走的
+				this.img[this.last].style.left = 0;
+				move(this.img[this.last],{left:800})
+//				要进来的
+				this.img[this.index].style.left = "-800px";
+				move(this.img[this.index],{left:0})
+			}else{
+//				
+//				要走的
+				this.img[this.last].style.left = 0;
+				move(this.img[this.last],{left:-800})
+				
+//				要进来的
+				this.img[this.index].style.left = "800px";
+				move(this.img[this.index],{left:0})
+			}
+    }
+   
+</script>
+</html>
